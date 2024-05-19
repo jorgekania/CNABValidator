@@ -4,6 +4,14 @@
 
 O Sistema de Validação de Arquivos CNAB é uma aplicação web desenvolvida com o framework Laravel v11.7.0 (PHP v8.2.18). Seu objetivo é permitir o upload de arquivos no formato CNAB (Centro Nacional de Automação Bancária) e validar se esses arquivos estão formatados corretamente de acordo com os layouts especificados.
 
+## Implementações Futuras
+
+-   Adicionar validação para CNAB 240
+-   Adicionar validação para CNAB 400
+-   Adicionar validação para CNAB de outros layouts
+
+Caso queria contribuir coim este projeto, faça um fork do mesmo e solicite uma PR, vamos colaborar
+
 ## Visão Geral
 
 O sistema consiste em duas principais partes:
