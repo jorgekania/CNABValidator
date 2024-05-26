@@ -34,20 +34,66 @@
                     <button type="submit" class="btn btn-primary">Validar</button>
                 </div>
             </form>
-            <div class="col-lg-12">
-                @if ($errors->any())
-                    <div class="alert alert-danger mt-3" role="alert">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+            <div class="col-lg-12 mt-4">
+                {{-- @yield('content') --}}
+                @if (isset($validate))
+                    <div
+                        class="alert {{ $validate->status == 'error' ? 'alert-danger' : ($validate->status == 'warning' ? 'alert-warning' : 'alert-success') }}">
+                        <p><strong>Layout:</strong> CNAB{{ $validate->layout }}</p>
+                        <p><strong>Status:</strong> {{ $validate->status }}</p>
                     </div>
-                @endif
 
-                @if (session('success'))
-                    <div class="alert alert-success mt-3" role="alert">
-                        {{ session('success') }}
+                    <div class="response-section">
+                        <h4>Retornos da Validação:</h4>
+
+                        @if (isset($validate->response->header))
+                            <div class="response-block">
+                                <h5>Header:</h5>
+                                @if (is_array($validate->response->header))
+                                    <ul>
+                                        @foreach ($validate->response->header as $headerMessage)
+                                            <li>{{ $headerMessage }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p>{{ $validate->response->header }}</p>
+                                @endif
+                            </div>
+                        @endif
+
+                        @if (isset($validate->response->details))
+                            <div class="response-block">
+                                <h5>Details:</h5>
+                                @if (is_array($validate->response->details))
+                                    <ul>
+                                        @foreach ($validate->response->details as $detailsMessage)
+                                            <li>{{ $detailsMessage }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p>{{ $validate->response->details }}</p>
+                                @endif
+                            </div>
+                        @endif
+
+                        @if (isset($validate->response->trailer))
+                            <div class="response-block">
+                                <h5>Trailer:</h5>
+                                @if (is_array($validate->response->trailer))
+                                    <ul>
+                                        @foreach ($validate->response->trailer as $trailerMessage)
+                                            <li>{{ $trailerMessage }}</li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <p>{{ $validate->response->trailer }}</p>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                @elseif(isset($error))
+                    <div class="alert alert-danger">
+                        <p>{{ $error }}</p>
                     </div>
                 @endif
             </div>
