@@ -6,9 +6,9 @@ O Sistema de Validação de Arquivos CNAB é uma aplicação web desenvolvida co
 
 ## Implementações Futuras
 
--   Adicionar validação para CNAB 240
--   Adicionar validação para CNAB 400
--   Adicionar validação para CNAB de outros layouts
+- []  Adicionar validação para CNAB 240
+- []  Adicionar validação para CNAB 400
+- []  Adicionar validação para CNAB de outros layouts
 
 Caso queria contribuir coim este projeto, faça um fork do mesmo e solicite uma PR, vamos colaborar
 
