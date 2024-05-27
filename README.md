@@ -23,7 +23,7 @@ O sistema consiste em duas principais partes:
 
 Quando todos os blocos foram validados com sucesso
 
-```
+```json
 {
     "layout": 444,
     "status": "success",
@@ -39,7 +39,7 @@ Quando todos os blocos foram validados com sucesso
 
 Quando apenas alguns blocos retornaram erro
 
-```
+```json
 {
     "layout": 444,
     "status": "warning",
@@ -57,7 +57,7 @@ Quando apenas alguns blocos retornaram erro
 
 Quando todos os blocos retornaram erro
 
-```
+```json
 {
     "layout": 444,
     "status": "error",
