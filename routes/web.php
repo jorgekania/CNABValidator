@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/cnab/upload', [CnabController::class, 'uploadForm'])->name('cnab.uploadForm');
+Route::get('/cnab', [CnabController::class, 'uploadForm'])->name('cnab.uploadForm');
 Route::post('/cnab/validate', [CnabController::class, 'validateCnab'])->name('cnab.validate');

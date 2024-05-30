@@ -12,7 +12,7 @@ class CnabController extends Controller
 
     public function uploadForm()
     {
-        return view('cnab.upload');
+        return view('validate');
     }
 
     public function validateCnab(Request $req)
@@ -23,9 +23,13 @@ class CnabController extends Controller
 
             $returnJson = json_decode($validate->content());
 
-            return view('cnab.upload')->with('validate', $returnJson);
+            if(isset($returnJson->response->error)){
+                return view('validate')->with('error', $returnJson->response->error);
+            }
+
+            return view('validate')->with('validate', $returnJson);
         }else{
-            return view('cnab.upload')->with('error', 'Não foi possível validar o arquivo!');
+            return view('validate')->with('error', 'Não foi possível validar o arquivo!');
         }
 
     }
