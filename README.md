@@ -6,9 +6,10 @@ O Sistema de Validação de Arquivos CNAB é uma aplicação web desenvolvida co
 
 ## Implementações Futuras
 
--   Adicionar validação para CNAB 240
--   Adicionar validação para CNAB 400
--   Adicionar validação para CNAB de outros layouts
+- [ ] Adicionar validação para CNAB 240
+- [ ] Adicionar validação para CNAB 400
+- [ ] Adicionar validação para CNAB de outros layouts
+- [ ] Maior detalhamento campo a campo para facilitar o entendimento do usuário
 
 Caso queria contribuir coim este projeto, faça um fork do mesmo e solicite uma PR, vamos colaborar
 
@@ -23,7 +24,7 @@ O sistema consiste em duas principais partes:
 
 Quando todos os blocos foram validados com sucesso
 
-```
+```json
 {
     "layout": 444,
     "status": "success",
@@ -39,7 +40,7 @@ Quando todos os blocos foram validados com sucesso
 
 Quando apenas alguns blocos retornaram erro
 
-```
+```json
 {
     "layout": 444,
     "status": "warning",
@@ -57,7 +58,7 @@ Quando apenas alguns blocos retornaram erro
 
 Quando todos os blocos retornaram erro
 
-```
+```json
 {
     "layout": 444,
     "status": "error",
