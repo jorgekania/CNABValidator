@@ -1,4 +1,4 @@
-# Documentação do Sistema de Validação de Arquivos CNAB
+# Sistema para Validação de Arquivos CNAB
 
 ![Imagem de demonstração de retorno da validação](https://github.com/jorgekania/CNABValidator/blob/jk/public/images/tela_exemplo_validador_cnab.png)
 
