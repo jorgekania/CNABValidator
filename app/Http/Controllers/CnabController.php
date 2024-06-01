@@ -25,8 +25,6 @@ class CnabController extends Controller
 
             $returnJson = json_decode($validate->content());
 
-            return $returnJson;
-
             if(isset($returnJson->response->error)){
                 return view('validate', ['fileName' => $fileName])->with('error', $returnJson->response->error);
             }
