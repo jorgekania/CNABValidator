@@ -1,15 +1,17 @@
 # Documentação do Sistema de Validação de Arquivos CNAB
 
+![Imagem de demonstração de retorno da validação](https://github.com/jorgekania/CNABValidator/blob/jk/public/tela_exemplo_validador_cnab.png)
+
 ## Introdução
 
 O Sistema de Validação de Arquivos CNAB é uma aplicação web desenvolvida com o framework Laravel v11.7.0 (PHP v8.2.18). Seu objetivo é permitir o upload de arquivos no formato CNAB (Centro Nacional de Automação Bancária) e validar se esses arquivos estão formatados corretamente de acordo com os layouts especificados.
 
 ## Implementações Futuras
 
-- [ ] Adicionar validação para CNAB 240
-- [ ] Adicionar validação para CNAB 400
-- [ ] Adicionar validação para CNAB de outros layouts
-- [ ] Maior detalhamento campo a campo para facilitar o entendimento do usuário
+-   [ ] Adicionar validação para CNAB 240
+-   [ ] Adicionar validação para CNAB 400
+-   [ ] Adicionar validação para CNAB de outros layouts
+-   [x] Maior detalhamento campo a campo para facilitar o entendimento do usuário
 
 Caso queria contribuir coim este projeto, faça um fork do mesmo e solicite uma PR, vamos colaborar
 
@@ -20,43 +22,14 @@ O sistema consiste em duas principais partes:
 1.  **Frontend:** Uma interface web onde os usuários podem fazer upload de arquivos CNAB.
 2.  **Backend:** Uma API RESTful para lidar com a validação dos arquivos.
 
-## Exemplo de retorno success
+## Exemplo de retorno
 
-Quando todos os blocos foram validados com sucesso
+A chave `status` no Json de retorno, pode conter:
 
-```json
-{
-    "layout": 444,
-    "status": "success",
-    "response": {
-        "header": "Header validado com sucesso",
-        "details": "Details validado com sucesso",
-        "trailer": "Trailer validado com sucesso"
-    }
-}
-```
+-   `error`: Quando algum campo do arquivo retornou erro na validação.
+-   `success`: Quando todos os campos foram validados com sucesso.
 
-## Exemplo de retorno warning
-
-Quando apenas alguns blocos retornaram erro
-
-```json
-{
-    "layout": 444,
-    "status": "warning",
-    "response": {
-        "header": [
-            "Campo 12: 'Identificação do Sistema' com valor inválido. Esperado 'MX', encontrado '.X'."
-        ],
-        "details": "Details validado com sucesso",
-        "trailer": "Trailer validado com sucesso"
-    }
-}
-```
-
-## Exemplo de retorno error
-
-Quando todos os blocos retornaram erro
+Abaixo apenas um exemplo do retorno, porem o Json vem com todas as chaves contidas no layout que passaram pela validação.
 
 ```json
 {
@@ -64,22 +37,46 @@ Quando todos os blocos retornaram erro
     "status": "error",
     "response": {
         "header": [
-            "Campo 12: 'Identificação do Sistema' com valor inválido. Esperado 'MX', encontrado '.X'."
+            {
+                "required": true,
+                "validate": true,
+                "field_number": 1,
+                "field_name": "Identificação do Registro",
+                "start_position": 1,
+                "end_position": 1,
+                "value": "0",
+                "expected_value": "0",
+                "format": "9(1)",
+                "message": "Campo validado com sucesso"
+            }
         ],
         "details": [
-            "Comprimento do layout inválido. Esperado 444 caracteres e foram detectado 443.",
-            "Campo 31: 'Agência depositária' com valor não numérico. Encontrado '    7'.",
-            "Campo 32: 'Espécie de título' com valor não numérico. Encontrado '0 '.",
-            "Campo 40: 'Valor presente da parcela (Valor de aquisição)' com valor não numérico. Encontrado '000000234255 '.",
-            "Campo 41: 'Valor do abatimento' com valor não numérico. Encontrado '            0'.",
-            "Campo 43: 'Número da inscrição do sacado' com valor não numérico. Encontrado '1111943000108D'.",
-            "Campo 48: 'CEP' com valor não numérico. Encontrado '2640904F'.",
-            "Campo 51: 'Nº sequencial do registro' com valor não numérico. Encontrado '00003\r'."
+            {
+                "required": true,
+                "validate": true,
+                "field_number": 1,
+                "field_name": "Identificação do registro",
+                "start_position": 1,
+                "end_position": 1,
+                "value": "1",
+                "expected_value": "1",
+                "format": "9(1)",
+                "message": "Campo validado com sucesso"
+            }
         ],
-        "trailer": [
-            "Comprimento do layout inválido. Esperado 444 caracteres e foram detectado 445.",
-            "Campo 2: 'Branco' com valor inválido. Esperado '                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', encontrado '                                                                                                                                                                  .                                                                                                                                                                                                                                                                                  '.",
-            "Campo 3: 'Nº Sequencial do Registro' com valor não numérico. Encontrado ' 00000'."
+        "trailler": [
+            {
+                "required": true,
+                "validate": true,
+                "field_number": 1,
+                "field_name": "Identificação do Registro",
+                "start_position": 1,
+                "end_position": 1,
+                "value": "9",
+                "expected_value": "9",
+                "format": "9(1)",
+                "message": "Campo validado com sucesso"
+            }
         ]
     }
 }
@@ -91,7 +88,7 @@ Quando todos os blocos retornaram erro
 
 O sistema define duas rotas principais para interação com o frontend:
 
--   `/cnab/upload`: Uma rota GET que exibe o formulário de upload do arquivo CNAB.
+-   `/cnab`: Uma rota GET que exibe o formulário de upload do arquivo CNAB.
 -   `/cnab/validate`: Uma rota POST que recebe o arquivo CNAB enviado pelo usuário e o valida.
 
 ### 2. Controlador CnabController
@@ -105,9 +102,11 @@ O `CnabController` é responsável por lidar com as solicitações relacionadas 
     -   Valida o conteúdo do arquivo CNAB de acordo com o layout detectado.
     -   Retorna um JSON com os resultados da validação.
 
+A classe `Service\CNABValidatorService` que recebe e processa a validação do arquivo.
+
 ### 3. Visualizações
 
-O sistema possui uma visualização Blade para o formulário de upload de arquivos CNAB em `resources/views/cnab/upload.blade.php`. Esta visualização contém um formulário simples que permite aos usuários fazerem upload de arquivos CNAB.
+O sistema possui uma visualização Blade para o formulário de upload de arquivos CNAB em `resources/views/layouts/app.blade.php`. Esta visualização contém um formulário simples que permite aos usuários fazerem upload de arquivos CNAB, após o processamento do formulário, caso a detecção do layout não de erro, é apresentada o resultado da validação campo a campo, facilitando ao usuário entender onde deve efetuar um determinada correção.
 
 ## Funcionamento da Validação
 

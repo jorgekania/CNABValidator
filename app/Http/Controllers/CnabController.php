@@ -18,18 +18,22 @@ class CnabController extends Controller
     public function validateCnab(Request $req)
     {
         $validate =  app(CNABValidatorService::class)->validateCnab($req);
+        $file = $req->file('file');
+        $fileName = $file->getClientOriginalName();
 
         if($validate->content() > 0){
 
             $returnJson = json_decode($validate->content());
 
+            return $returnJson;
+
             if(isset($returnJson->response->error)){
-                return view('validate')->with('error', $returnJson->response->error);
+                return view('validate', ['fileName' => $fileName])->with('error', $returnJson->response->error);
             }
 
-            return view('validate')->with('validate', $returnJson);
+            return view('validate', ['fileName' => $fileName])->with('validate', $returnJson);
         }else{
-            return view('validate')->with('error', 'Não foi possível validar o arquivo!');
+            return view('validate', ['fileName' => $fileName])->with('error', 'Não foi possível validar o arquivo!');
         }
 
     }

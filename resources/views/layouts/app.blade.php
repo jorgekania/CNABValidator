@@ -10,6 +10,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -17,21 +21,23 @@
     </style>
 </head>
 
-<body>
+<body class="p-5">
     <div class="container mt-4">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center bg-light shadow border rounded">
             <div class="my-4 text-center">
                 <h1>Validador de arquivo CNAB</h1>
             </div>
             <form action="{{ route('cnab.validate') }}" method="POST" enctype="multipart/form-data"
                 class="col-lg-12 w-50">
                 @csrf
-                <div class="mb-3">
-                    <label for="file" class="form-label fw-bold">Arquivo CNAB:</label>
-                    <input type="file" class="form-control" id="file" name="file" required>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Validar</button>
+                <label for="file" class="form-label col-form-label fw-bold">Arquivo CNAB:</label>
+                <div class="d-flex">
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control border-primary" id="file" name="file" required>
+                    </div>
+                    <div class="col-sm-2 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Validar</button>
+                    </div>
                 </div>
             </form>
             <div class="col-lg-12 mt-4">
