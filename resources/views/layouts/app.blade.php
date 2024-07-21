@@ -23,17 +23,19 @@
 
 <body class="p-5">
     <div class="container mt-4">
-        <div class="row justify-content-center bg-light shadow border rounded">
-            <div class="my-4 text-center">
-                <h1>Validador de arquivo CNAB</h1>
-            </div>
+        <div class="my-4 text-center pb-4">
+            <h1><a href="{{ route('cnab.uploadForm') }}" class="text-decoration-none"><i class="fa-solid fa-house"></i>
+                    Validador de arquivo CNAB</a></h1>
+        </div>
+        <div class="row justify-content-center bg-light shadow border rounded pt-4">
             <form action="{{ route('cnab.validate') }}" method="POST" enctype="multipart/form-data"
                 class="col-lg-12 w-50">
                 @csrf
                 <label for="file" class="form-label col-form-label fw-bold">Arquivo CNAB:</label>
                 <div class="d-flex">
                     <div class="col-sm-10">
-                        <input type="file" class="form-control border-primary" id="file" name="file" required>
+                        <input type="file" class="form-control border-primary" id="file" name="file"
+                            required>
                     </div>
                     <div class="col-sm-2 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary">Validar</button>
